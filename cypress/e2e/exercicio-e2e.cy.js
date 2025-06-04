@@ -28,9 +28,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         dados[0].cor,
         dados[0].quantidade)
       cy.get('.woocommerce-message').should('contain' , dados[0].nomeProduto)
-      
     })
-
     cy.fixture('produtos').then(dados => {
       produtosPage.buscarProduto(dados[1].nomeProduto)
       produtosPage.addProdutoCarrinho(
@@ -38,9 +36,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         dados[1].cor,
         dados[1].quantidade)
       cy.get('.woocommerce-message').should('contain' , dados[1].nomeProduto)
-      
     })
-
     cy.fixture('produtos').then(dados => {
       produtosPage.buscarProduto(dados[2].nomeProduto)
       produtosPage.addProdutoCarrinho(
@@ -48,9 +44,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         dados[2].cor,
         dados[2].quantidade)
       cy.get('.woocommerce-message').should('contain' , dados[2].nomeProduto)
-      
     })
-
     cy.fixture('produtos').then(dados => {
       produtosPage.buscarProduto(dados[3].nomeProduto)
       produtosPage.addProdutoCarrinho(
@@ -58,7 +52,11 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         dados[3].cor,
         dados[3].quantidade)
       cy.get('.woocommerce-message').should('contain' , dados[3].nomeProduto)
-      
     })
+
+    cy.get('.woocommerce-message > .button').click()
+    cy.get('.checkout-button').click()
+    cy.get('#terms').click()
+    cy.get('#place_order').click()
   });
 })
