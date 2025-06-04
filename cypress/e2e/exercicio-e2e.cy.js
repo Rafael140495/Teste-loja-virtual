@@ -1,4 +1,6 @@
 /// <reference types="cypress" />
+import produtosPage from "../support/page_objects/produtos.page"
+
 
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
   /*  Como cliente 
@@ -10,45 +12,53 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
       E validando minha compra ao final */
 
   beforeEach(() => {
-      cy.visit('/')
+      cy.visit('/minha-conta')
+      cy.fixture('perfil').then((dados) => {
+            cy.login(dados.usuario, dados.senha)
+      })
+      cy.visit('/produtos')
   });
 
   it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
-      //TODO: Coloque todo o fluxo de teste aqui, considerando as boas práticas e otimizações
-      cy.get('.icon-user-unfollow').click()
-      cy.get('#username').type('rafael.teste@teste.com')
-      cy.get('#password').type('ebac123!')
-      cy.get('.woocommerce-form > .button').click()
-      cy.get('.woocommerce-MyAccount-content > :nth-child(2)').should('contain' , 'Olá, rafael.teste (não é rafael.teste? Sair)')
-      cy.get('#primary-menu > .menu-item-629 > a').click()
-      cy.get('.product-block').eq(0).click()
-      cy.get('.button-variable-item-M').click()
-      cy.get('.button-variable-item-Red').click()
-      cy.get('.input-text').clear().type(2)
-      cy.get('.single_add_to_cart_button').click()
-      cy.get('.woocommerce-message').should('contain' , '2 × “Abominable Hoodie” foram adicionados no seu carrinho.')
-      cy.get('#primary-menu > .menu-item-629 > a').click()
-      cy.get('.product-block').eq(1).click()
-      cy.get('.button-variable-item-S').click()
-      cy.get('.button-variable-item-Black').click()
-      cy.get('.input-text').clear().type(1)
-      cy.get('.single_add_to_cart_button').click()
-      cy.get('.woocommerce-message').should('contain' , '“Aero Daily Fitness Tee” foi adicionado no seu carrinho.')
-      cy.get('#primary-menu > .menu-item-629 > a').click()
-      cy.get('.product-block').eq(2).click()
-      cy.get('.button-variable-item-36').click()
-      cy.get('.button-variable-item-Brown').click()
-      cy.get('.input-text').clear().type(3)
-      cy.get('.single_add_to_cart_button').click()
-      cy.get('.woocommerce-message').should('contain' , '3 × “Aether Gym Pant” foram adicionados no seu carrinho.')
-      cy.get('#primary-menu > .menu-item-629 > a').click()
-      cy.get('.product-block').eq(3).click()
-      cy.get('.button-variable-item-M').click()
-      cy.get('.button-variable-item-Red').click()
-      cy.get('.input-text').clear().type(1)
-      cy.get('.single_add_to_cart_button').click()
-      cy.get('.woocommerce-message').should('contain' , '“Ajax Full-Zip Sweatshirt” foi adicionado no seu carrinho.')
+    //TODO: Coloque todo o fluxo de teste aqui, considerando as boas práticas e otimizações
+    cy.fixture('produtos').then(dados => {
+      produtosPage.buscarProduto(dados[0].nomeProduto)
+      produtosPage.addProdutoCarrinho(
+        dados[0].tamanho,
+        dados[0].cor,
+        dados[0].quantidade)
+      cy.get('.woocommerce-message').should('contain' , dados[0].nomeProduto)
+      
+    })
+
+    cy.fixture('produtos').then(dados => {
+      produtosPage.buscarProduto(dados[1].nomeProduto)
+      produtosPage.addProdutoCarrinho(
+        dados[1].tamanho,
+        dados[1].cor,
+        dados[1].quantidade)
+      cy.get('.woocommerce-message').should('contain' , dados[1].nomeProduto)
+      
+    })
+
+    cy.fixture('produtos').then(dados => {
+      produtosPage.buscarProduto(dados[2].nomeProduto)
+      produtosPage.addProdutoCarrinho(
+        dados[2].tamanho,
+        dados[2].cor,
+        dados[2].quantidade)
+      cy.get('.woocommerce-message').should('contain' , dados[2].nomeProduto)
+      
+    })
+
+    cy.fixture('produtos').then(dados => {
+      produtosPage.buscarProduto(dados[3].nomeProduto)
+      produtosPage.addProdutoCarrinho(
+        dados[3].tamanho,
+        dados[3].cor,
+        dados[3].quantidade)
+      cy.get('.woocommerce-message').should('contain' , dados[3].nomeProduto)
+      
+    })
   });
-
-
 })
