@@ -57,6 +57,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
     cy.get('.woocommerce-message > .button').click()
     cy.get('.checkout-button').click()
     cy.get('#terms').click()
-    cy.get('#place_order').click()
+    cy.get('#place_order').click( {force:true} )
+    cy.get('.page-title', { timeout: 15000 }).should('be.visible').and('contain', 'Pedido recebido')
   });
 })
